@@ -9,24 +9,47 @@ public class Main {
         frame.setSize(600, 500);
         frame.setLayout(new BorderLayout());
 
-        //creating button to show calendar
+
+        //menu to show all buttons (so user can choose WHAT to do)
+        JPanel menuPanel = new JPanel(new GridLayout(3, 1, 10, 10)); //stacked buttons
+        frame.add(menuPanel, BorderLayout.CENTER);
+
+        //BUTTONSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSs
+        //calendar button
         JButton CalendarBtn = new JButton("Calendar");
-        //putting button on frame
-        frame.add(CalendarBtn, BorderLayout.NORTH);
-
-        JPanel mainPanel = new JPanel(new CardLayout());
-        frame.add(mainPanel, BorderLayout.CENTER);
-
-        CalendarPanel calendar = new CalendarPanel(2025, 10);
-        mainPanel.add(calendar, "Calendar");
+        //goals button
+        JButton GoalsBtn = new JButton("Goals");
 
 
-        //to show calendar when clicked
-        CalendarBtn.addActionListener(e -> {
-            CardLayout cl = (CardLayout) mainPanel.getLayout();
-            cl.show(mainPanel, "Calendar");
-        });
+        //adding buttons to menuPanel
+        menuPanel.add(CalendarBtn);
+        menuPanel.add(GoalsBtn);
 
+        //cardPanel allows us to switch from menu, to calendar display/panel, goals, etc
+        JPanel cardPanel = new JPanel(new CardLayout());
+        cardPanel.add(menuPanel, "MENU");
+
+
+        //add cardPanel to frame
+        frame.add(cardPanel);
+
+        //needed to use cl.show and show different "pages"
+        CardLayout cl = (CardLayout) cardPanel.getLayout();
+
+        //change this to open the current month of user's computer, for now use 11/2025 for testing purposes
+        CalendarPanel calendar = new CalendarPanel(2025, 11);
+        JButton backToMenuBtn = new JButton("<- Back");
+        JPanel calendarScreen = new JPanel(new BorderLayout());
+        calendarScreen.add(backToMenuBtn, BorderLayout.NORTH);
+        calendarScreen.add(calendar, BorderLayout.CENTER);
+        cardPanel.add(calendarScreen, "Calendar");
+
+        //show calendar when CalendarBtn clicked
+        CalendarBtn.addActionListener(e -> {cl.show(cardPanel, "Calendar");});
+        //backToMenu button goes back to menu (
+        backToMenuBtn.addActionListener(e -> cl.show(cardPanel, "MENU"));
+
+        cl.show(cardPanel, "MENU");
         frame.setVisible(true);
 
     }
