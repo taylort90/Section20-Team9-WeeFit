@@ -1,0 +1,148 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Courier New", monospace;
+    background-color: white;
+    color: black;
+}
+
+
+/* ------------------------------
+   Left Sidebar
+------------------------------ */
+
+.sidebar {
+    width: 200px;
+    height: 100vh;
+    background-color: steelblue; /* closest to screenshot */
+    padding: 20px;
+    float: left;
+}
+
+.sidebar a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.sidebar a:hover {
+    text-decoration: underline;
+}
+
+
+/* ------------------------------
+   Page Title (centered)
+------------------------------ */
+
+.header {
+    margin-left: 200px;
+    padding: 20px 0;
+    text-align: center;
+    font-size: 32px;
+    border-bottom: 2px solid black;
+}
+
+
+/* ------------------------------
+   Content Area
+------------------------------ */
+
+.container {
+    margin-left: 200px;
+    padding: 20px 40px;
+}
+
+
+/* ------------------------------
+   Labels + Textboxes
+------------------------------ */
+
+label {
+    font-size: 16px;
+    font-weight: bold;
+    display: inline-block;
+    width: 120px;
+    margin-bottom: 10px;
+}
+
+input[type="text"],
+input[type="number"],
+select,
+textarea {
+    width: 180px;
+    height: 20px;
+    border: 1px solid black;
+    background-color: white;
+    font-family: "Courier New";
+    padding: 2px;
+}
+
+textarea {
+    resize: none;
+}
+
+
+/* ------------------------------
+   Buttons (Search, Reset, etc.)
+------------------------------ */
+
+button {
+    padding: 5px 20px;
+    margin: 10px 10px 10px 0;
+    background-color: gainsboro;
+    border: 1px solid black;
+    font-family: "Courier New";
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: lightgray;
+}
+
+
+/* ------------------------------
+   Box for Results
+------------------------------ */
+
+.box {
+    border: 1px solid black;
+    padding: 10px;
+    margin-top: 20px;
+}
+
+
+/* ------------------------------
+   Tables (Dealer List Style)
+------------------------------ */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-family: "Courier New";
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 6px;
+}
+
+th {
+    background-color: lightgray;
+    font-weight: bold;
+}
+
+
+/* ------------------------------
+   Scroll-style List (Manufacturer)
+------------------------------ */
+
+select[multiple] {
+    width: 160px;
+    height: 100px;
+    overflow-y: scroll;
+    background-color: white;
+    border: 1px solid black;
+}
