@@ -1,57 +1,83 @@
 import javax.swing.*;
 import java.awt.*;
+import java.time.*;
 
 public class Main {
-    public static void main(String[] args) {
-        //creating a frame for app (to test calendar for now)
-        JFrame frame = new JFrame("App menu");
+    private final JFrame frame;
+    private final JPanel cardPanel;
+    private final CardLayout cardLayout;
+
+
+    public Main() {
+        //creating a frame for Weefit
+        frame = new JFrame("Weefit: A Well-Being App!");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(600, 500);
         frame.setLayout(new BorderLayout());
 
 
-        //menu to show all buttons (so user can choose WHAT to do)
-        JPanel menuPanel = new JPanel(new GridLayout(3, 1, 10, 10)); //stacked buttons
-        frame.add(menuPanel, BorderLayout.CENTER);
+        //cardPanel for switching from menu, to calendar display/panel, goals, etc
+        cardPanel = new JPanel(new CardLayout());
 
+        //add cardPanel to frame
+        frame.add(cardPanel);
+        //we want to first add the login panel, then change to menu panel ONCE USER LOGS IN
+        //UPDATE CODE TO MATCH PREV COMMENT
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        //also, change the frame to something other than App menu (since it will hold login first, then menu) just to make it more clear
+
+        //LOGIN PANEL:
+        WeeFitLoginPanel loginPanel = new WeeFitLoginPanel(this);
+        cardPanel.add(loginPanel, "LOGIN");
+
+
+        //MENU PANEL: to show all buttons (so user can choose what to do)
+        JPanel menuPanel = new JPanel(new GridLayout(3, 1, 10, 10)); //stacked buttons
         //BUTTONSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSs
         //calendar button
         JButton CalendarBtn = new JButton("Calendar");
         //goals button
         JButton GoalsBtn = new JButton("Goals");
-
-
-        //adding buttons to menuPanel
         menuPanel.add(CalendarBtn);
         menuPanel.add(GoalsBtn);
 
-        //cardPanel allows us to switch from menu, to calendar display/panel, goals, etc
-        JPanel cardPanel = new JPanel(new CardLayout());
         cardPanel.add(menuPanel, "MENU");
 
 
-        //add cardPanel to frame
-        frame.add(cardPanel);
-
         //needed to use cl.show and show different "pages"
-        CardLayout cl = (CardLayout) cardPanel.getLayout();
+        cardLayout = (CardLayout) cardPanel.getLayout();
 
-        //change this to open the current month of user's computer, for now use 11/2025 for testing purposes
-        CalendarPanel calendar = new CalendarPanel(2025, 11);
+        // ====CALENDAR PANEL====
+        LocalDate today = LocalDate.now();
+        int calendarMonth = today.getMonthValue();
+        int calendarYear = today.getYear();
+        CalendarPanel calendar = new CalendarPanel(calendarYear, calendarMonth);
         JButton backToMenuBtn = new JButton("<- Back");
         JPanel calendarScreen = new JPanel(new BorderLayout());
         calendarScreen.add(backToMenuBtn, BorderLayout.NORTH);
         calendarScreen.add(calendar, BorderLayout.CENTER);
         cardPanel.add(calendarScreen, "Calendar");
 
+        //BUTTON FUNCTIONALITY
         //show calendar when CalendarBtn clicked
-        CalendarBtn.addActionListener(e -> {cl.show(cardPanel, "Calendar");});
+        CalendarBtn.addActionListener(e -> {showPanel("Calendar", "Weefit: Calendar");});
         //backToMenu button goes back to menu (
-        backToMenuBtn.addActionListener(e -> cl.show(cardPanel, "MENU"));
+        backToMenuBtn.addActionListener(e -> showPanel("MENU", "MENU"));
 
-        cl.show(cardPanel, "MENU");
+        //show login first
+        showPanel("LOGIN", "WeeFit -- Login");
+        //cardLayout.show(cardPanel, "MENU");
         frame.setVisible(true);
 
+    }
+
+    public void showPanel(String name, String title ) {
+        cardLayout.show(cardPanel, name);
+        frame.setTitle(title);
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(Main::new);
     }
 
 
