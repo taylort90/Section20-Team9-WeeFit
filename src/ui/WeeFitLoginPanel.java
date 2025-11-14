@@ -1,3 +1,6 @@
+package ui;
+import app.Main;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;

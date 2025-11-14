@@ -1,3 +1,7 @@
+package app;
+import ui.CalendarPanel;
+import ui.WeeFitLoginPanel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.time.*;

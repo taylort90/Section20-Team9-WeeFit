@@ -1,9 +1,11 @@
+package ui;
+
 import javax.swing.*;
 import java.awt.*;
 import java.time.*;
 
 
-//class CalendarPanel to create a calendar
+//class ui.CalendarPanel to create a calendar
 //created by: Anthony Hernandez
 
 public class CalendarPanel extends JPanel{
