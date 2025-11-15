@@ -40,7 +40,7 @@ public class DayEntry {
         return tasks;
     }
 
-    public LocalTime getTimeWentToSlept() {
+    public LocalTime getTimeWentToSleep() {
         return timeWentToSleep;
     }
 
