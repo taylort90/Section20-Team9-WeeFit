@@ -1,0 +1,51 @@
+{
+  "users": {
+    "tony": {
+      "2025-11-16": {
+        "date": "2025-11-16",
+        "tasks": [
+          {
+            "taskName": "feed ginga",
+            "date": "2025-11-16",
+            "completed": true
+          },
+          {
+            "taskName": "eat protein",
+            "date": "2025-11-16",
+            "completed": false
+          },
+          {
+            "taskName": "workout",
+            "date": "2025-11-16",
+            "completed": true
+          },
+          {
+            "taskName": "do hw",
+            "date": "2025-11-16",
+            "completed": false
+          },
+          {
+            "taskName": "dont do hw",
+            "date": "2025-11-16",
+            "completed": true
+          },
+          {
+            "taskName": "go to sleep",
+            "date": "2025-11-16",
+            "completed": false
+          },
+          {
+            "taskName": "dont go to sleep",
+            "date": "2025-11-16",
+            "completed": true
+          }
+        ],
+        "workouts": [],
+        "goals": [],
+        "timeWentToSleep": "22:00",
+        "timeWokeUp": "05:00",
+        "weight": 0.0
+      }
+    }
+  }
+}
