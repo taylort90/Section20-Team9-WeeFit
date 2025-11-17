@@ -29,52 +29,16 @@ public class DayEntryPanel extends JPanel {
         sleepPanel.add(new JLabel("Time went to sleep: "));
         JTextField sleepField = new JTextField(dayEntry.getTimeWentToSleep() != null ? dayEntry.getTimeWentToSleep().toString() : "", 5);
         sleepPanel.add(sleepField);
-
         sleepPanel.add(new JLabel("Time woke up :"));
         JTextField wakeUpField = new JTextField(dayEntry.getTimeWokeUp() != null ? dayEntry.getTimeWokeUp().toString() : "", 5);
         sleepPanel.add(wakeUpField);
+
         add(sleepPanel);
 
         //tasks
-        JPanel taskPanel = new JPanel();
-        taskPanel.setLayout(new BoxLayout(taskPanel, BoxLayout.Y_AXIS));
-        taskPanel.setBorder(BorderFactory.createTitledBorder("Tasks"));
-
-        //show tasks with check box //!!!!!!!!!!!!!!!!!make it so box changes color when completed
-        for (Task task : dayEntry.getTasks()) {
-            JCheckBox checkBox = new JCheckBox(task.getTaskName(), task.isCompleted());
-            checkBox.addActionListener(e -> task.setCompleted(checkBox.isSelected()));
-            taskPanel.add(checkBox);
-        }
-
-
-        // add task
-
-        JTextField newTaskField = new JTextField(15);
-        JButton addTaskBtn = new JButton("Add task");
-        addTaskBtn.addActionListener((ActionEvent e) -> {
-            String taskName = newTaskField.getText().trim();
-            if(!taskName.isEmpty()) {
-                Task newTask = new Task(taskName, dayEntry.getDate());
-                dayEntry.addTask(newTask);
-
-                JCheckBox checkBox = new JCheckBox(newTask.getTaskName());
-                checkBox.addActionListener(ev -> newTask.setCompleted(checkBox.isSelected()));
-                taskPanel.add(checkBox);
-                taskPanel.revalidate();
-                newTaskField.setText("");
-
-                //write to file
-                dao.saveDay(username, dayEntry);
-            }
-        });
-
-        JPanel addTaskPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        addTaskPanel.add(newTaskField);
-        addTaskPanel.add(addTaskBtn);
-        taskPanel.add(addTaskPanel);
-
-        add(taskPanel);
+        TaskPanel taskPanel = new TaskPanel(dayEntry, dao, username);
+        JScrollPane taskScrollPane = new JScrollPane(taskPanel);
+        add(taskScrollPane);
 
         //Save Button
         JButton saveBtn = new JButton("Save");
