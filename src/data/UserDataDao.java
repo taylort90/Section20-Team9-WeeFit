@@ -15,8 +15,8 @@ public class UserDataDao {
     //using a hashmap to store all the days for a user
     private Map<String,Map<String, DayEntry>> users = new HashMap<>();
     //this will be the file we save all user data to. NOTE: one file will do for now, but in long run we would want one file per day (if we have time we can implement that)
-    private static final Path FILE = Paths.get("userdata.json");
-    //use gson to convert objects to strings to store in the userdata.json
+    private static final Path FILE = Paths.get("userDays.json");
+    //use gson to convert objects to strings to store in the userDays.json
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     //
 
@@ -27,7 +27,7 @@ public class UserDataDao {
             if (Files.exists(FILE)) {
                 //read the json file
                 String json = Files.readString(FILE);
-                //loaded is UserDataDao that holds all days gson got from the userdata.json
+                //loaded is UserDataDao that holds all days gson got from the userDays.json
                 UserDataDao loaded = gson.fromJson(json, UserDataDao.class);
                 //storing all the days by using gson
                 this.users = loaded.users;

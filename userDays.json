@@ -45,6 +45,21 @@
         "timeWentToSleep": "22:00",
         "timeWokeUp": "05:00",
         "weight": 0.0
+      },
+      "2025-11-17": {
+        "date": "2025-11-17",
+        "tasks": [
+          {
+            "taskName": "feed ginga",
+            "date": "2025-11-17",
+            "completed": false
+          }
+        ],
+        "workouts": [],
+        "goals": [],
+        "timeWentToSleep": "23:15",
+        "timeWokeUp": "08:15",
+        "weight": 0.0
       }
     }
   }
