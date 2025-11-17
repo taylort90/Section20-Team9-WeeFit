@@ -7,6 +7,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
 
+
+//created by: Anthony
+//a menu that shows several buttons
+//for now, just the calendar button works
+
+
 public class MenuPanel extends JPanel {
     private final UserDataDao userDataDao;
     private final String username;

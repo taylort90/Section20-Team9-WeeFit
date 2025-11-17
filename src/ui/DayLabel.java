@@ -4,6 +4,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
 
+
+//Created by: Anthony
+//this is the square of each day on the calendar panel
+//want to implement things like highlighted for amount of sleep that day, show preview of tasks (small colored bullets?)
+
 public class DayLabel extends JLabel {
     private LocalDate date;
 

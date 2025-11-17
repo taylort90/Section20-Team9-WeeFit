@@ -8,6 +8,9 @@ import java.awt.event.ActionListener;
 import java.time.LocalTime;
 
 
+//Created by: Anthony
+//This is the panel that opens once the user clicks on a day (on the monthly calendar view)
+
 public class DayEntryPanel extends JPanel {
     private DayEntry dayEntry;
     private UserDataDao dao;
