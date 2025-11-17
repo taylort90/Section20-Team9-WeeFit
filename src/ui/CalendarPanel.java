@@ -27,11 +27,12 @@ public class CalendarPanel extends JPanel{
     JButton nextMonthBtn = new JButton("->");
 
     //creating panel that displays a month of a year on a calendar display
-    public CalendarPanel(int year, int month, UserDataDao dao) {
+    public CalendarPanel(int year, int month, UserDataDao dao, String username) {
         setLayout(new BorderLayout());
         this.calendarMonth = month;
         this.calendarYear = year;
         this.userDataDao=dao;
+        this.username=username;
         yearMonth = YearMonth.of(calendarYear, calendarMonth);
         calendarGrid = new JPanel(new GridLayout(0, 7));
         add(calendarGrid, BorderLayout.CENTER);
@@ -69,9 +70,6 @@ public class CalendarPanel extends JPanel{
         });
     }
 
-    void setUsername (String username) {
-        this.username=username;
-    }
     //render Calendar will use local (updated) variables calendarYear and calendarMonth to show the correct calendar view
     private void renderCalendar() {
         calendarGrid.removeAll();

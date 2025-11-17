@@ -12,6 +12,8 @@ import java.awt.*;
 //created by: Anthony
 //Purpose: a Panel that holds tasks for the day (user can check them off) and an option to add new tasks
 //Used in: menuPanel, dayEntryPanel
+
+//NOTE: NEED TO ADD DELETE TASK
 public class TaskPanel extends JPanel {
 
     public TaskPanel(DayEntry dayEntry, UserDataDao dao, String username ) {

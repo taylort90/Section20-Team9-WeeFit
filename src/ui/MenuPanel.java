@@ -24,24 +24,26 @@ public class MenuPanel extends JPanel {
         this.userDataDao = dao;
         this.username = username;
         this.mainApp = mainApp;
-        setLayout(new GridLayout(3, 1, 10, 10)); //stacked buttons)
+        setLayout(new BorderLayout(10,10)); //stacked buttons)
 
+        //TOP PANEL
+        //STILL NEED: make text bigger
         JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         JLabel greetingLabel= new JLabel("Hello, " + username+ "!");
         topPanel.add(greetingLabel);
         //adding to top of this (MenuPanel)
-        add(topPanel);
+        add(topPanel,BorderLayout.NORTH);
 
         //MIDDLE PANEL
-        //MAKE SURE THIS IS CORRECT: Make the middle panel the tasks (made TaskPanel.java to make this easier (we already implemented this in dayEntryPanel, so now we can reuse (yayyy!))
+        //NOTE: Change up TaskPanel to make it look prettier
         DayEntry todayEntry = userDataDao.getDay(this.username, LocalDate.now());
         TaskPanel todayTaskPanel= new TaskPanel(todayEntry, userDataDao, this.username );
         JScrollPane taskScrollPane = new JScrollPane(todayTaskPanel);
-        add(taskScrollPane);
+        add(taskScrollPane, BorderLayout.CENTER);
         //END MIDDLE PANEL
 
         //BOTTOM PANEL
-        //STILL NEED: Make a bottom Panel, add buttons to it and put at bottom of this (MenuPanel)
+        //STILL NEED: Make buttons lower
         JPanel bottomPanel=new JPanel(new FlowLayout(FlowLayout.CENTER,20,10));
 
         JButton CalendarBtn = new JButton("Calendar");
@@ -50,9 +52,10 @@ public class MenuPanel extends JPanel {
 
         //goals button
         JButton GoalsBtn = new JButton("Goals");
+        GoalsBtn.addActionListener(e->openGoals());
         //do addActionListener once we implement the goals part
         bottomPanel.add(GoalsBtn);
-        add(bottomPanel);
+        add(bottomPanel, BorderLayout.SOUTH);
         //END BOTTOM PANEL
     }
 
@@ -62,8 +65,8 @@ public class MenuPanel extends JPanel {
         int calendarMonth = today.getMonthValue();
         int calendarYear = today.getYear();
         //could change constructor to have username (for less lines)
-        CalendarPanel calendar = new CalendarPanel(calendarYear, calendarMonth, userDataDao);
-        calendar.setUsername(mainApp.getCurrentUsername());
+        CalendarPanel calendar = new CalendarPanel(calendarYear, calendarMonth, userDataDao, username);
+        //calendar.setUsername(mainApp.getCurrentUsername());
 
         JButton backToMenuBtn = new JButton("<- Back");
         backToMenuBtn.addActionListener(e -> mainApp.showPanel("MENU", "MENU"));
@@ -76,6 +79,21 @@ public class MenuPanel extends JPanel {
         }
 
         mainApp.showPanel("Calendar", "Calendar");
+    }
+
+    private void openGoals() {
+        GoalsPanel goals= new GoalsPanel();
+        JPanel goalScreen = new JPanel(new BorderLayout());
+
+        JButton backToMenuBtn = new JButton("<- Back");
+        backToMenuBtn.addActionListener(e -> mainApp.showPanel("MENU", "MENU"));
+
+        goalScreen.add(backToMenuBtn, BorderLayout.NORTH);
+        goalScreen.add(goals, BorderLayout.CENTER);
+        if (!mainApp.isPanelAdded("Goals")) {
+            mainApp.addPanel(goalScreen, "Goals");
+        }
+        mainApp.showPanel("Goals", "Goals");
 
     }
 
