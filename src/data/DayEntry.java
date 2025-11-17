@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class DayEntry {
-    private LocalDate date; //to store the date for all this data
+    private String date; //to store the date for all this data
     //going to store the tasks user wants per day,
     private List<Task> tasks= new ArrayList<>();
 
@@ -19,19 +19,22 @@ public class DayEntry {
     //going to use sleep times to calculate how much sleep user got
     //idea: from calendar view, show red for days (or maybe weeks) where user didn't get enough sleep
     //timeWentToSleep is the time from the night before, but stored in current day for ease of calculating sleep
-    private LocalTime timeWentToSleep;
-    private LocalTime timeWokeUp;
+    private String timeWentToSleep;
+    private String timeWokeUp;
     //going to have to put these as strings to store, so maybe change to string instead of LocalTime
 
     private float weight;
 
     public DayEntry(LocalDate date) {
-        this.date = date;
+        this.date = date.toString();
     }
-    public LocalDate getDate () {
-        return date;
+    public String getDate () {
+        return date; //string to date
     }
 
+    public LocalDate getDateToLocalDate () {
+        return LocalDate.parse(date);
+    }
     public float getWeight() {
         return weight;
     }
@@ -41,11 +44,13 @@ public class DayEntry {
     }
 
     public LocalTime getTimeWentToSleep() {
-        return timeWentToSleep;
+        if (timeWentToSleep==null) return null;
+        return LocalTime.parse(timeWentToSleep);
     }
 
     public LocalTime getTimeWokeUp() {
-        return timeWokeUp;
+        if (timeWokeUp==null) return null;
+        return LocalTime.parse(timeWokeUp);
     }
 
     public List<String> getGoals() {
@@ -69,17 +74,17 @@ public class DayEntry {
 
     //sleep+wake up sets
     public void setTimeWentToSleep(LocalTime time) {
-        timeWentToSleep = time;
+        timeWentToSleep = time.toString();
     }
 
     public void setTimeWokeUp(LocalTime time) {
-        timeWokeUp = time;
+        timeWokeUp = time.toString();
     }
 
     public double getHoursSlept() {
         if (timeWentToSleep == null || timeWokeUp== null) return 0; //if user didn't record either one, return 0 (can't calc)
-        LocalTime wentToSleep = timeWentToSleep;
-        LocalTime wokeUp = timeWokeUp;
+        LocalTime wentToSleep = LocalTime.parse(timeWentToSleep);
+        LocalTime wokeUp = LocalTime.parse(timeWokeUp);
         if (wokeUp.isBefore(wentToSleep)) { //if recorded time of going to sleep was before midnight, need to make wake up time greater (interpreted as next day) to calc sleep time
             wokeUp=wokeUp.plusHours(24);//move to "next day" for calculating sleep
         }

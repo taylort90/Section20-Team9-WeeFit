@@ -59,7 +59,7 @@ public class UserDataDao {
         } else { //if days does, we want to return the DayEntry inside user's days
             days = users.get(username);
             if (days.get(date.toString())==null) {
-                days.put(date.toString(), new DayEntry(date));
+                days.put(date.toString(),new DayEntry(date));
             }
         }
         return days.get(date.toString());
@@ -73,7 +73,7 @@ public class UserDataDao {
             days = users.get(username);
         }
         //put day in user's days
-        days.put(day.getDate().toString(), day);
+        days.put(day.getDate(), day);
         users.put(username, days);
         //write everything back to file
         saveToFile();

@@ -4,10 +4,10 @@ import java.time.LocalDate;
 
 public class Task {
     private String taskName;
-    private LocalDate date;
+    private String date;
     private boolean completed;
 
-    public Task(String name, LocalDate date) {
+    public Task(String name, String date) {
         this.taskName =name;
         this.date= date;
         this.completed = false;
@@ -17,7 +17,7 @@ public class Task {
         return taskName;
     }
     public LocalDate getDate() {
-        return date;
+        return LocalDate.parse(date);
     }
 
     public boolean isCompleted() {
@@ -28,7 +28,7 @@ public class Task {
         taskName=name;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(String date) {
         this.date=date;
     }
 

@@ -99,6 +99,7 @@ public class WeeFitLoginPanel extends JPanel {
                 messageLabel.setForeground(new Color(0, 153, 51));
                 messageLabel.setText("Login successful! Welcome, " + username + "");
                 mainApp.showPanel("MENU", "MENU");
+                mainApp.onLogin(username);
             } else {
                 messageLabel.setForeground(new Color(200, 0, 0));
                 messageLabel.setText("Invalid credentials. Try again.");

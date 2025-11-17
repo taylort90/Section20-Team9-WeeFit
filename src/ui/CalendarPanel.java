@@ -1,7 +1,12 @@
 package ui;
 
+import data.DayEntry;
+import data.UserDataDao;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.time.*;
 
 
@@ -14,16 +19,19 @@ public class CalendarPanel extends JPanel{
     private int calendarYear;
     private JLabel monthYearLabel;
     private JPanel calendarGrid;
+    private UserDataDao userDataDao;
+    private String username;
     YearMonth yearMonth;
     //buttons for changing months
     JButton prevMonthBtn = new JButton("<-");
     JButton nextMonthBtn = new JButton("->");
 
     //creating panel that displays a month of a year on a calendar display
-    public CalendarPanel(int year, int month) {
+    public CalendarPanel(int year, int month, UserDataDao dao) {
         setLayout(new BorderLayout());
         this.calendarMonth = month;
         this.calendarYear = year;
+        this.userDataDao=dao;
         yearMonth = YearMonth.of(calendarYear, calendarMonth);
         calendarGrid = new JPanel(new GridLayout(0, 7));
         add(calendarGrid, BorderLayout.CENTER);
@@ -61,6 +69,9 @@ public class CalendarPanel extends JPanel{
         });
     }
 
+    void setUsername (String username) {
+        this.username=username;
+    }
     //render Calendar will use local (updated) variables calendarYear and calendarMonth to show the correct calendar view
     private void renderCalendar() {
         calendarGrid.removeAll();
@@ -88,12 +99,34 @@ public class CalendarPanel extends JPanel{
             calendarGrid.add(new JLabel("")); //empty String
         } //then add numbered days
         for (int day =1; day<=yearMonth.lengthOfMonth(); day++) {
-            LocalDate today = LocalDate.now();
-            JLabel dayLabel = new JLabel(String.valueOf(day), SwingConstants.CENTER);
-            dayLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-            if (today.getDayOfMonth() == day && today.getMonthValue() == calendarMonth && today.getYear() == calendarYear) { //wanna highlight today's date for user
-                dayLabel.setBackground(Color.YELLOW);
-                dayLabel.setOpaque(true);
+            //
+            LocalDate date= LocalDate.of(calendarYear, calendarMonth, day);
+            //using DayLabel so we can edit how this Label works in a separate class
+            DayLabel dayLabel = new DayLabel(date);
+
+            dayLabel.addMouseListener(new MouseAdapter(){
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    //clickedDay= day user clicked
+                    DayLabel clickedDay = (DayLabel) e.getSource();
+                    LocalDate clickedDate = clickedDay.getDate();
+
+                    //getting DayEntry using DAO
+                    DayEntry dayEntry = userDataDao.getDay(username, clickedDate);
+
+                    DayEntryPanel entryPanel = new DayEntryPanel(dayEntry, userDataDao, username);
+                    Frame parentFrame = (Frame) SwingUtilities.getWindowAncestor(CalendarPanel.this);
+                    JDialog dialog = new JDialog(parentFrame, "Edit " + clickedDate , true);
+                    dialog.setContentPane(entryPanel);
+                    dialog.pack();
+                    dialog.setLocationRelativeTo(parentFrame);
+                    dialog.setVisible(true);
+                }
+            });
+
+
+            if (LocalDate.now().equals(date)) { //highlight today's date
+                dayLabel.highlightToday();
             }
             calendarGrid.add(dayLabel);
         }

@@ -1,16 +1,23 @@
 package app;
+import data.UserDataDao;
+//can eventually chagne ui's to just ui.menu (since menu will have the others)
 import ui.CalendarPanel;
+import ui.MenuPanel;
 import ui.WeeFitLoginPanel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.time.*;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Main {
     private final JFrame frame;
     private final JPanel cardPanel;
     private final CardLayout cardLayout;
-
+    private String currentUsername;
+    private final Set<String> addedPanels = new HashSet<>();
+    private final UserDataDao userDataDao;
 
     public Main() {
         //creating a frame for Weefit
@@ -19,16 +26,15 @@ public class Main {
         frame.setSize(600, 500);
         frame.setLayout(new BorderLayout());
 
+        //holds all user's dayEntry's seperated by user
+        userDataDao = new UserDataDao();
+        userDataDao.loadFromFile();
 
         //cardPanel for switching from menu, to calendar display/panel, goals, etc
         cardPanel = new JPanel(new CardLayout());
 
         //add cardPanel to frame
         frame.add(cardPanel);
-        //we want to first add the login panel, then change to menu panel ONCE USER LOGS IN
-        //UPDATE CODE TO MATCH PREV COMMENT
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        //also, change the frame to something other than App menu (since it will hold login first, then menu) just to make it more clear
 
         //LOGIN PANEL:
         WeeFitLoginPanel loginPanel = new WeeFitLoginPanel(this);
@@ -36,37 +42,12 @@ public class Main {
 
 
         //MENU PANEL: to show all buttons (so user can choose what to do)
-        JPanel menuPanel = new JPanel(new GridLayout(3, 1, 10, 10)); //stacked buttons
-        //BUTTONSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSs
-        //calendar button
-        JButton CalendarBtn = new JButton("Calendar");
-        //goals button
-        JButton GoalsBtn = new JButton("Goals");
-        menuPanel.add(CalendarBtn);
-        menuPanel.add(GoalsBtn);
+        //MenuPanel menuPanel = new MenuPanel(userDataDao, currentUsername, this); //stacked buttons
 
-        cardPanel.add(menuPanel, "MENU");
-
+        //cardPanel.add(menuPanel, "MENU");
 
         //needed to use cl.show and show different "pages"
         cardLayout = (CardLayout) cardPanel.getLayout();
-
-        // ====CALENDAR PANEL====
-        LocalDate today = LocalDate.now();
-        int calendarMonth = today.getMonthValue();
-        int calendarYear = today.getYear();
-        CalendarPanel calendar = new CalendarPanel(calendarYear, calendarMonth);
-        JButton backToMenuBtn = new JButton("<- Back");
-        JPanel calendarScreen = new JPanel(new BorderLayout());
-        calendarScreen.add(backToMenuBtn, BorderLayout.NORTH);
-        calendarScreen.add(calendar, BorderLayout.CENTER);
-        cardPanel.add(calendarScreen, "Calendar");
-
-        //BUTTON FUNCTIONALITY
-        //show calendar when CalendarBtn clicked
-        CalendarBtn.addActionListener(e -> {showPanel("Calendar", "Weefit: Calendar");});
-        //backToMenu button goes back to menu (
-        backToMenuBtn.addActionListener(e -> showPanel("MENU", "MENU"));
 
         //show login first
         showPanel("LOGIN", "WeeFit -- Login");
@@ -75,6 +56,8 @@ public class Main {
 
     }
 
+
+
     public void showPanel(String name, String title ) {
         cardLayout.show(cardPanel, name);
         frame.setTitle(title);
@@ -82,6 +65,34 @@ public class Main {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(Main::new);
+    }
+
+    public void addPanel(JPanel panel, String name) {
+        if (!addedPanels.contains(name)) {
+            cardPanel.add(panel, name);
+            addedPanels.add(name);
+        }
+    }
+
+    public void setCurrentUsername(String username) {
+        this.currentUsername= username;
+    }
+
+    public String getCurrentUsername() {
+        return currentUsername;
+    }
+
+    public boolean isPanelAdded(String name) {
+        return addedPanels.contains(name);
+    }
+
+
+    public void onLogin(String username) {
+        this.currentUsername=username;
+        MenuPanel menuPanel = new MenuPanel(userDataDao, currentUsername, this); //stacked buttons
+        addPanel(menuPanel, "MENU");
+
+        showPanel("MENU", "Menu");
     }
 
 
