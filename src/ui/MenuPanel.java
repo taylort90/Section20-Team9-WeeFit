@@ -2,7 +2,7 @@ package ui;
 
 import app.Main;
 import data.DayEntry;
-import data.UserDataDao;
+import data.UserDaysDao;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,13 +15,13 @@ import java.time.LocalDate;
 //opened after user logs in
 
 public class MenuPanel extends JPanel {
-    private final UserDataDao userDataDao;
+    private final UserDaysDao userDaysDao;
     private final String username;
     private final Main mainApp;
 
 
-    public MenuPanel(UserDataDao dao, String username, Main mainApp) {
-        this.userDataDao = dao;
+    public MenuPanel(UserDaysDao dao, String username, Main mainApp) {
+        this.userDaysDao = dao;
         this.username = username;
         this.mainApp = mainApp;
         setLayout(new BorderLayout(10,10)); //stacked buttons)
@@ -36,8 +36,8 @@ public class MenuPanel extends JPanel {
 
         //MIDDLE PANEL
         //NOTE: Change up TaskPanel to make it look prettier
-        DayEntry todayEntry = userDataDao.getDay(this.username, LocalDate.now());
-        TaskPanel todayTaskPanel= new TaskPanel(todayEntry, userDataDao, this.username );
+        DayEntry todayEntry = userDaysDao.getDay(this.username, LocalDate.now());
+        TaskPanel todayTaskPanel= new TaskPanel(todayEntry, userDaysDao, this.username );
         JScrollPane taskScrollPane = new JScrollPane(todayTaskPanel);
         add(taskScrollPane, BorderLayout.CENTER);
         //END MIDDLE PANEL
@@ -65,7 +65,7 @@ public class MenuPanel extends JPanel {
         int calendarMonth = today.getMonthValue();
         int calendarYear = today.getYear();
         //could change constructor to have username (for less lines)
-        CalendarPanel calendar = new CalendarPanel(calendarYear, calendarMonth, userDataDao, username);
+        CalendarPanel calendar = new CalendarPanel(calendarYear, calendarMonth, userDaysDao, username);
         //calendar.setUsername(mainApp.getCurrentUsername());
 
         JButton backToMenuBtn = new JButton("<- Back");

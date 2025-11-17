@@ -2,7 +2,7 @@ package ui;
 
 import data.DayEntry;
 import data.Task;
-import data.UserDataDao;
+import data.UserDaysDao;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,7 +16,7 @@ import java.awt.*;
 //NOTE: NEED TO ADD DELETE TASK
 public class TaskPanel extends JPanel {
 
-    public TaskPanel(DayEntry dayEntry, UserDataDao dao, String username ) {
+    public TaskPanel(DayEntry dayEntry, UserDaysDao dao, String username ) {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorder(BorderFactory.createTitledBorder("Tasks"));
 

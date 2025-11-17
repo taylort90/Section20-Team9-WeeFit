@@ -52,7 +52,7 @@
           {
             "taskName": "feed ginga",
             "date": "2025-11-17",
-            "completed": false
+            "completed": true
           }
         ],
         "workouts": [],

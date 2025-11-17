@@ -3,8 +3,6 @@ import data.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.time.LocalTime;
 
 
@@ -13,10 +11,10 @@ import java.time.LocalTime;
 
 public class DayEntryPanel extends JPanel {
     private DayEntry dayEntry;
-    private UserDataDao dao;
+    private UserDaysDao dao;
     private String username;
 
-    public DayEntryPanel(DayEntry dayEntry, UserDataDao dao, String username) {
+    public DayEntryPanel(DayEntry dayEntry, UserDaysDao dao, String username) {
         this.dayEntry=dayEntry;
         this.dao=dao;
         this.username=username;

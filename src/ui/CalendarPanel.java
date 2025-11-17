@@ -1,7 +1,7 @@
 package ui;
 
 import data.DayEntry;
-import data.UserDataDao;
+import data.UserDaysDao;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,7 +19,7 @@ public class CalendarPanel extends JPanel{
     private int calendarYear;
     private JLabel monthYearLabel;
     private JPanel calendarGrid;
-    private UserDataDao userDataDao;
+    private UserDaysDao userDaysDao;
     private String username;
     YearMonth yearMonth;
     //buttons for changing months
@@ -27,11 +27,11 @@ public class CalendarPanel extends JPanel{
     JButton nextMonthBtn = new JButton("->");
 
     //creating panel that displays a month of a year on a calendar display
-    public CalendarPanel(int year, int month, UserDataDao dao, String username) {
+    public CalendarPanel(int year, int month, UserDaysDao dao, String username) {
         setLayout(new BorderLayout());
         this.calendarMonth = month;
         this.calendarYear = year;
-        this.userDataDao=dao;
+        this.userDaysDao =dao;
         this.username=username;
         yearMonth = YearMonth.of(calendarYear, calendarMonth);
         calendarGrid = new JPanel(new GridLayout(0, 7));
@@ -110,9 +110,9 @@ public class CalendarPanel extends JPanel{
                     LocalDate clickedDate = clickedDay.getDate();
 
                     //getting DayEntry using DAO
-                    DayEntry dayEntry = userDataDao.getDay(username, clickedDate);
+                    DayEntry dayEntry = userDaysDao.getDay(username, clickedDate);
 
-                    DayEntryPanel entryPanel = new DayEntryPanel(dayEntry, userDataDao, username);
+                    DayEntryPanel entryPanel = new DayEntryPanel(dayEntry, userDaysDao, username);
                     Frame parentFrame = (Frame) SwingUtilities.getWindowAncestor(CalendarPanel.this);
                     JDialog dialog = new JDialog(parentFrame, "Edit " + clickedDate , true);
                     dialog.setContentPane(entryPanel);

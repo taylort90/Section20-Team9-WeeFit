@@ -1,13 +1,11 @@
 package app;
-import data.UserDataDao;
+import data.UserDaysDao;
 //can eventually chagne ui's to just ui.menu (since menu will have the others)
-import ui.CalendarPanel;
 import ui.MenuPanel;
 import ui.WeeFitLoginPanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.time.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,7 +15,7 @@ public class Main {
     private final CardLayout cardLayout;
     private String currentUsername;
     private final Set<String> addedPanels = new HashSet<>();
-    private final UserDataDao userDataDao;
+    private final UserDaysDao userDaysDao;
 
     public Main() {
         //creating a frame for Weefit
@@ -27,8 +25,8 @@ public class Main {
         frame.setLayout(new BorderLayout());
 
         //holds all user's dayEntry's seperated by user
-        userDataDao = new UserDataDao();
-        userDataDao.loadFromFile();
+        userDaysDao = new UserDaysDao();
+        userDaysDao.loadFromFile();
 
         //cardPanel for switching from menu, to calendar display/panel, goals, etc
         cardPanel = new JPanel(new CardLayout());
@@ -89,7 +87,7 @@ public class Main {
 
     public void onLogin(String username) {
         this.currentUsername=username;
-        MenuPanel menuPanel = new MenuPanel(userDataDao, currentUsername, this); //stacked buttons
+        MenuPanel menuPanel = new MenuPanel(userDaysDao, currentUsername, this); //stacked buttons
         addPanel(menuPanel, "MENU");
 
         showPanel("MENU", "Menu");

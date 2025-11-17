@@ -10,7 +10,7 @@ import java.util.Map;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-public class UserDataDao {
+public class UserDaysDao {
 
     //using a hashmap to store all the days for a user
     private Map<String,Map<String, DayEntry>> users = new HashMap<>();
@@ -28,7 +28,7 @@ public class UserDataDao {
                 //read the json file
                 String json = Files.readString(FILE);
                 //loaded is UserDataDao that holds all days gson got from the userDays.json
-                UserDataDao loaded = gson.fromJson(json, UserDataDao.class);
+                UserDaysDao loaded = gson.fromJson(json, UserDaysDao.class);
                 //storing all the days by using gson
                 this.users = loaded.users;
             }
