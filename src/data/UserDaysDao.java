@@ -10,6 +10,9 @@ import java.util.Map;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+//Created by: Tony
+//Purpose: Reads/writes all of the data from userDays.json. Can give DayEntrys, and add days to the users list of days.
+
 public class UserDaysDao {
 
     //using a hashmap to store all the days for a user

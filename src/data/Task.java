@@ -2,6 +2,9 @@ package data;
 
 import java.time.LocalDate;
 
+
+//Created by: Tony
+//tasks are used in the DayEntry.java
 public class Task {
     private String taskName;
     private String date;

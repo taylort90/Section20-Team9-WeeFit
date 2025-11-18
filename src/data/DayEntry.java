@@ -5,17 +5,22 @@ import java.time.LocalTime;
 import java.time.LocalDate;
 import java.util.List;
 
+//Created by: Tony
+//DayEntrys are stored in the userDaysDao.java
+//Purpose: holds date, list of tasks for that day, sleep times 
+
+
 public class DayEntry {
     private String date; //to store the date for all this data
     //going to store the tasks user wants per day,
     private List<Task> tasks= new ArrayList<>();
 
     //this will differ, and actually be workouts that user has done
-    private List<String> workouts = new ArrayList<>();
+    //private List<String> workouts = new ArrayList<>();
     //not sure if i will implement this right away, but have it for now
 
     //might change this out of DayEntry
-    private List<String> goals = new ArrayList<>();
+    //private List<String> goals = new ArrayList<>();
     //going to use sleep times to calculate how much sleep user got
     //idea: from calendar view, show red for days (or maybe weeks) where user didn't get enough sleep
     //timeWentToSleep is the time from the night before, but stored in current day for ease of calculating sleep

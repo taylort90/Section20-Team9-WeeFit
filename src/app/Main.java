@@ -84,7 +84,6 @@ public class Main {
         return addedPanels.contains(name);
     }
 
-
     public void onLogin(String username) {
         this.currentUsername=username;
         MenuPanel menuPanel = new MenuPanel(userDaysDao, currentUsername, this); //stacked buttons
