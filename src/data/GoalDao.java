@@ -21,9 +21,7 @@ public class GoalDao {
         loadFromFile();
     }
 
-    // -------------------------------
     // Load JSON into goalsMap
-    // -------------------------------
     public void loadFromFile() {
         File file = new File(FILE_PATH);
 
@@ -46,9 +44,7 @@ public class GoalDao {
         }
     }
 
-    // -------------------------------
-    // Save goalsMap → JSON
-    // -------------------------------
+    // Save goalsMap to JSON
     public void saveToFile() {
         try (Writer writer = new FileWriter(FILE_PATH)) {
             gson.toJson(goalsMap, writer);
@@ -57,32 +53,24 @@ public class GoalDao {
         }
     }
 
-    // -------------------------------
     // Add new user entry
-    // -------------------------------
     public void addGoalEntry(GoalEntry entry) {
         goalsMap.put(entry.getUsername(), entry);
         saveToFile();
     }
 
-    // -------------------------------
     // Get user entry
-    // -------------------------------
     public GoalEntry getGoalEntry(String username) {
         return goalsMap.get(username);
     }
 
-    // -------------------------------
     // Update existing entry
-    // -------------------------------
     public void updateGoalEntry(GoalEntry entry) {
         goalsMap.put(entry.getUsername(), entry);
         saveToFile();
     }
 
-    // -------------------------------
     // Check if user exists
-    // -------------------------------
     public boolean hasEntry(String username) {
         return goalsMap.containsKey(username);
     }
