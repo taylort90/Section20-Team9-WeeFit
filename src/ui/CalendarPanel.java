@@ -112,7 +112,9 @@ public class CalendarPanel extends JPanel{
                     //getting DayEntry using DAO
                     DayEntry dayEntry = userDaysDao.getDay(username, clickedDate);
 
-                    DayEntryPanel entryPanel = new DayEntryPanel(dayEntry, userDaysDao, username);
+                    DayEntryPanel entryPanel = new DayEntryPanel(dayEntry, userDaysDao, username, () -> {
+                        refresh();
+                    });
                     Frame parentFrame = (Frame) SwingUtilities.getWindowAncestor(CalendarPanel.this);
                     JDialog dialog = new JDialog(parentFrame, "Edit " + clickedDate , true);
                     dialog.setContentPane(entryPanel);
@@ -127,10 +129,28 @@ public class CalendarPanel extends JPanel{
                 dayLabel.highlightToday();
             }
             calendarGrid.add(dayLabel);
+
+            //using this to display users info on calendar
+            DayEntry userDay = userDaysDao.getDay(username, date);
+            if (userDay.getHoursSlept()!=0) {
+                System.out.println(date + " slept: " + userDay.getHoursSlept());
+                if (userDay.getHoursSlept()<7.5) {
+                    dayLabel.highlightBadSleep();
+                } else if (userDay.getHoursSlept()>=7.5) {
+                    dayLabel.highlightGoodSleep();
+                }
+            }
+
         }
         calendarGrid.revalidate();
         calendarGrid.repaint();
 
+    }
+
+    public void refresh() {
+        renderCalendar();
+        revalidate();
+        repaint();
     }
 
 }

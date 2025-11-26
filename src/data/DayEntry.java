@@ -1,5 +1,6 @@
 package data;
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.time.LocalTime;
 import java.time.LocalDate;
@@ -58,13 +59,13 @@ public class DayEntry {
         return LocalTime.parse(timeWokeUp);
     }
 
-    public List<String> getGoals() {
-        return goals;
-    }
+////    public List<String> getGoals() {
+//        return goals;
+//    }
 
-    public List<String> getWorkouts() {
-        return workouts;
-    }
+//    public List<String> getWorkouts() {
+//        return workouts;
+//    }
 
     public void addTask(Task task) {
         tasks.add(task);
@@ -73,9 +74,10 @@ public class DayEntry {
     public void setWeight(float weight) {
         this.weight=weight;
     }
-    public void addGoal(String goal) {
-        goals.add(goal);
-    }
+
+//    public void addGoal(String goal) {
+//        goals.add(goal);
+//    }
 
     //sleep+wake up sets
     public void setTimeWentToSleep(LocalTime time) {
@@ -90,11 +92,17 @@ public class DayEntry {
         if (timeWentToSleep == null || timeWokeUp== null) return 0; //if user didn't record either one, return 0 (can't calc)
         LocalTime wentToSleep = LocalTime.parse(timeWentToSleep);
         LocalTime wokeUp = LocalTime.parse(timeWokeUp);
+
+        LocalDate today = LocalDate.now();
+        LocalDateTime sleptTime= LocalDateTime.of(today, LocalTime.parse(timeWentToSleep));
+
+        LocalDateTime wakeTime= LocalDateTime.of(today, LocalTime.parse(timeWokeUp));
+
         if (wokeUp.isBefore(wentToSleep)) { //if recorded time of going to sleep was before midnight, need to make wake up time greater (interpreted as next day) to calc sleep time
-            wokeUp=wokeUp.plusHours(24);//move to "next day" for calculating sleep
+            wakeTime= wakeTime.plusDays(1);//move to "next day" for calculating sleep
         }
         //can't use toHours because it would just give whole number. we want precision: need to use toMinutes()/60
-        return Duration.between(wentToSleep, wokeUp).toMinutes()/60.0;
+        return Duration.between(sleptTime, wakeTime).toMinutes()/60.0;
     }
 
 

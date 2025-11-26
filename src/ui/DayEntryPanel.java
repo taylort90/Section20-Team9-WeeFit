@@ -13,21 +13,23 @@ public class DayEntryPanel extends JPanel {
     private DayEntry dayEntry;
     private UserDaysDao dao;
     private String username;
+    private Runnable onSaveCallback;
 
-    public DayEntryPanel(DayEntry dayEntry, UserDaysDao dao, String username) {
+    public DayEntryPanel(DayEntry dayEntry, UserDaysDao dao, String username, Runnable onSaveCallback) {
         this.dayEntry=dayEntry;
         this.dao=dao;
         this.username=username;
+        this.onSaveCallback = onSaveCallback;
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 
         //Sleep times
         JPanel sleepPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        sleepPanel.add(new JLabel("Time went to sleep: "));
+        sleepPanel.add(new JLabel("Slept at (hh:mm): "));
         JTextField sleepField = new JTextField(dayEntry.getTimeWentToSleep() != null ? dayEntry.getTimeWentToSleep().toString() : "", 5);
         sleepPanel.add(sleepField);
-        sleepPanel.add(new JLabel("Time woke up :"));
+        sleepPanel.add(new JLabel("Woke up at (hh:mm): "));
         JTextField wakeUpField = new JTextField(dayEntry.getTimeWokeUp() != null ? dayEntry.getTimeWokeUp().toString() : "", 5);
         sleepPanel.add(wakeUpField);
 
@@ -54,6 +56,9 @@ public class DayEntryPanel extends JPanel {
                 JOptionPane.showMessageDialog(this, "Saved day");
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
+            }
+            if(onSaveCallback!=null) {
+                onSaveCallback.run();
             }
         });
         add(saveBtn);

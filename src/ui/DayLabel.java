@@ -31,9 +31,14 @@ public class DayLabel extends JLabel {
         return date;
     }
 
+    //functions to highlight days (based on sleep/ todays date)
     public void highlightToday() {
         setBackground(Color.YELLOW);
     }
+
+    public void highlightBadSleep() { setBackground(Color.RED);}
+
+    public void highlightGoodSleep() { setBackground(Color.green);}
 
     //add more for coloring day if bad sleep, or other things
 
