@@ -8,95 +8,113 @@ import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
 
-
-//created by: Anthony
-//a menu that shows several buttons
-//for now, just the calendar button works
-//opened after user logs in
-
 public class MenuPanel extends JPanel {
     private final UserDaysDao userDaysDao;
     private final String username;
     private final Main mainApp;
 
-
     public MenuPanel(UserDaysDao dao, String username, Main mainApp) {
         this.userDaysDao = dao;
         this.username = username;
         this.mainApp = mainApp;
-        setLayout(new BorderLayout(10,10)); //stacked buttons)
 
-        //TOP PANEL
-        //STILL NEED: make text bigger
-        JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        JLabel greetingLabel= new JLabel("Hello, " + username+ "!");
-        topPanel.add(greetingLabel);
-        //adding to top of this (MenuPanel)
-        add(topPanel,BorderLayout.NORTH);
+        setLayout(new BorderLayout(20, 20));
+        setBackground(Color.WHITE);
 
-        //MIDDLE PANEL
-        //NOTE: Change up TaskPanel to make it look prettier
-        DayEntry todayEntry = userDaysDao.getDay(this.username, LocalDate.now());
-        TaskPanel todayTaskPanel= new TaskPanel(todayEntry, userDaysDao, this.username );
+        // TOP PANEL (Title + Description)
+        JPanel topPanel = new JPanel();
+        topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS));
+        topPanel.setBackground(Color.WHITE);
+
+        JLabel title = new JLabel(username + "'s Dashboard");
+        title.setFont(new Font("SansSerif", Font.BOLD, 26));
+        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JLabel description = new JLabel("Check today's tasks, set your goals, or view your calendar.");
+        description.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        description.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        topPanel.add(Box.createVerticalStrut(15));
+        topPanel.add(title);
+        topPanel.add(Box.createVerticalStrut(5));
+        topPanel.add(description);
+        topPanel.add(Box.createVerticalStrut(15));
+
+        add(topPanel, BorderLayout.NORTH);
+
+        //Todays tasks
+        DayEntry todayEntry = userDaysDao.getDay(username, LocalDate.now());
+        TaskPanel todayTaskPanel = new TaskPanel(todayEntry, userDaysDao, username);
+
         JScrollPane taskScrollPane = new JScrollPane(todayTaskPanel);
+        taskScrollPane.setBorder(BorderFactory.createTitledBorder("Today's Tasks"));
+
         add(taskScrollPane, BorderLayout.CENTER);
-        //END MIDDLE PANEL
 
-        //BOTTOM PANEL
-        //STILL NEED: Make buttons lower
-        JPanel bottomPanel=new JPanel(new FlowLayout(FlowLayout.CENTER,20,10));
+      //buttons panel
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 25, 15));
+        bottomPanel.setBackground(Color.WHITE);
 
-        JButton CalendarBtn = new JButton("Calendar");
-        CalendarBtn.addActionListener(e -> openCalendar());
-        bottomPanel.add(CalendarBtn);
+        JButton calendarBtn = createStyledButton("Calendar");
+        calendarBtn.addActionListener(e -> openCalendar());
 
-        //goals button
-        JButton GoalsBtn = new JButton("Goals");
-        GoalsBtn.addActionListener(e->openGoals());
-        //do addActionListener once we implement the goals part
-        bottomPanel.add(GoalsBtn);
+        JButton goalsBtn = createStyledButton("Goals");
+        goalsBtn.addActionListener(e -> openGoals());
+
+        bottomPanel.add(calendarBtn);
+        bottomPanel.add(goalsBtn);
+
         add(bottomPanel, BorderLayout.SOUTH);
-        //END BOTTOM PANEL
     }
 
+    // Helper: Styled Button
+    private JButton createStyledButton(String text) {
+        JButton b = new JButton(text);
+        b.setFont(new Font("SansSerif", Font.BOLD, 16));
+        b.setPreferredSize(new Dimension(180, 40));
+        b.setFocusPainted(false);
+        b.setBackground(new Color(70, 130, 180));
+        b.setForeground(Color.WHITE);
+        b.setBorder(BorderFactory.createEmptyBorder(8, 15, 8, 15));
+        return b;
+    }
 
     private void openCalendar() {
         LocalDate today = LocalDate.now();
-        int calendarMonth = today.getMonthValue();
-        int calendarYear = today.getYear();
-        //could change constructor to have username (for less lines)
-        CalendarPanel calendar = new CalendarPanel(calendarYear, calendarMonth, userDaysDao, username);
-        //calendar.setUsername(mainApp.getCurrentUsername());
+        CalendarPanel calendar = new CalendarPanel(
+                today.getYear(),
+                today.getMonthValue(),
+                userDaysDao,
+                username
+        );
 
-        JButton backToMenuBtn = new JButton("<- Back");
-        backToMenuBtn.addActionListener(e -> mainApp.showPanel("MENU", "MENU"));
+        JButton backBtn = new JButton("← Back");
+        backBtn.addActionListener(e -> mainApp.showPanel("MENU", "MENU"));
 
-        JPanel calendarScreen = new JPanel(new BorderLayout());
-        calendarScreen.add(backToMenuBtn, BorderLayout.NORTH);
-        calendarScreen.add(calendar, BorderLayout.CENTER);
+        JPanel screen = new JPanel(new BorderLayout());
+        screen.add(backBtn, BorderLayout.NORTH);
+        screen.add(calendar, BorderLayout.CENTER);
+
         if (!mainApp.isPanelAdded("Calendar")) {
-            mainApp.addPanel(calendarScreen, "Calendar");
+            mainApp.addPanel(screen, "Calendar");
         }
-
         mainApp.showPanel("Calendar", "Calendar");
     }
 
     private void openGoals() {
-        GoalsPanel goals= new GoalsPanel();
-        JPanel goalScreen = new JPanel(new BorderLayout());
+        GoalsPanel goals = new GoalsPanel();
 
-        JButton backToMenuBtn = new JButton("<- Back");
-        backToMenuBtn.addActionListener(e -> mainApp.showPanel("MENU", "MENU"));
+        JButton backBtn = new JButton("← Back");
+        backBtn.addActionListener(e -> mainApp.showPanel("MENU", "MENU"));
 
-        goalScreen.add(backToMenuBtn, BorderLayout.NORTH);
-        goalScreen.add(goals, BorderLayout.CENTER);
+        JPanel screen = new JPanel(new BorderLayout());
+        screen.add(backBtn, BorderLayout.NORTH);
+        screen.add(goals, BorderLayout.CENTER);
+
         if (!mainApp.isPanelAdded("Goals")) {
-            mainApp.addPanel(goalScreen, "Goals");
+            mainApp.addPanel(screen, "Goals");
         }
         mainApp.showPanel("Goals", "Goals");
-
     }
-
-
-
 }
