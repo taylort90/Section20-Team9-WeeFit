@@ -136,7 +136,7 @@ public class WeeFitLoginPanel extends JPanel {
     private JButton createButton(String text) {
         JButton button = new JButton(text);
         button.setFocusPainted(false);
-        button.setBackground(new Color(55, 125, 255));
+        button.setBackground(new Color(84, 172, 171));
         button.setForeground(Color.WHITE);
         button.setFont(new Font("Segoe UI", Font.BOLD, 14));
         button.setBorder(BorderFactory.createEmptyBorder(8, 16, 8, 16));
