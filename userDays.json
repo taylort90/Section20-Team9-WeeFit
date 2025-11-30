@@ -176,7 +176,13 @@
       },
       "2025-11-25": {
         "date": "2025-11-25",
-        "tasks": [],
+        "tasks": [
+          {
+            "taskName": "break tanner",
+            "date": "2025-11-25",
+            "completed": false
+          }
+        ],
         "timeWentToSleep": "23:00",
         "timeWokeUp": "08:00",
         "weight": 0.0

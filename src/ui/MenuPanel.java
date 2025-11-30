@@ -77,6 +77,7 @@ public class MenuPanel extends JPanel {
         b.setBackground(new Color(70, 130, 180));
         b.setForeground(Color.WHITE);
         b.setBorder(BorderFactory.createEmptyBorder(8, 15, 8, 15));
+        b.setOpaque(true);
         return b;
     }
 

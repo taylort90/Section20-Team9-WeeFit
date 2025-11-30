@@ -140,6 +140,7 @@ public class WeeFitLoginPanel extends JPanel {
         button.setForeground(Color.WHITE);
         button.setFont(new Font("Segoe UI", Font.BOLD, 14));
         button.setBorder(BorderFactory.createEmptyBorder(8, 16, 8, 16));
+        button.setOpaque(true);
         return button;
     }
 
