@@ -2,16 +2,18 @@ package ui;
 
 import data.DayEntry;
 import data.UserDaysDao;
+import data.Task;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.*;
+import java.util.List;
 
 
 //class ui.CalendarPanel to create a calendar
-//created by: Anthony Hernandez
+//created by: Anthony Hernandez (i made sum changes)
 
 public class CalendarPanel extends JPanel{
 
@@ -124,23 +126,75 @@ public class CalendarPanel extends JPanel{
                 }
             });
 
-
             if (LocalDate.now().equals(date)) { //highlight today's date
                 dayLabel.highlightToday();
             }
             calendarGrid.add(dayLabel);
 
-            //using this to display users info on calendar
+            // Get the DayEntry for this date
             DayEntry userDay = userDaysDao.getDay(username, date);
-            if (userDay.getHoursSlept()!=0) {
-                System.out.println(date + " slept: " + userDay.getHoursSlept());
-                if (userDay.getHoursSlept()<7.5) {
-                    dayLabel.highlightBadSleep();
-                } else if (userDay.getHoursSlept()>=7.5) {
-                    dayLabel.highlightGoodSleep();
+
+            // ===== NEW: compute tasks + sleep summary =====
+            int totalTasks = 0;
+            int completedTasks = 0;
+            double hoursSlept = 0.0;
+
+            if (userDay != null) {
+                // Sleep
+                hoursSlept = userDay.getHoursSlept();
+
+                // Tasks
+                List<Task> tasks = userDay.getTasks();
+                if (tasks != null) {
+                    totalTasks = tasks.size();
+                    for (Task t : tasks) {
+                        if (t.isCompleted()) {
+                            completedTasks++;
+                        }
+                    }
                 }
             }
 
+            boolean hasTasks = totalTasks > 0;
+            boolean hasSleep = hoursSlept > 0.0;
+
+            if (hasTasks || hasSleep) {
+                double roundedSleep = Math.round(hoursSlept * 10.0) / 10.0;
+
+                StringBuilder sb = new StringBuilder();
+
+                // Summary (centered content)
+                if (hasTasks) {
+                    sb.append("<html>");
+                    sb.append(totalTasks)
+                            .append(totalTasks == 1 ? " task" : " tasks")
+                            .append("<br>")
+                            .append(completedTasks)
+                            .append("/")
+                            .append(totalTasks)
+                            .append(" completed");
+                    sb.append("</html>");
+                }
+
+                if (hasSleep) {
+                    if (hasTasks) {
+                        sb.append("\n\n");
+                    }
+                    sb.append(roundedSleep).append(" hours of sleep");
+                }
+
+                dayLabel.setSummary(sb.toString());
+            }
+
+            // ===== highlight logic for sleep =====
+            if (userDay != null && userDay.getHoursSlept() != 0) {
+                System.out.println(date + " slept: " + userDay.getHoursSlept());
+                if (userDay.getHoursSlept() < 7.5) {
+                    dayLabel.highlightBadSleep();
+                } else if (userDay.getHoursSlept() >= 7.5) {
+                    dayLabel.highlightGoodSleep();
+                }
+            }
         }
         calendarGrid.revalidate();
         calendarGrid.repaint();

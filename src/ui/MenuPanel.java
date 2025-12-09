@@ -51,7 +51,7 @@ public class MenuPanel extends JPanel {
 
         add(taskScrollPane, BorderLayout.CENTER);
 
-      //buttons panel
+        //buttons panel
         JPanel bottomPanel = new JPanel();
         bottomPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 25, 15));
         bottomPanel.setBackground(Color.WHITE);
@@ -77,7 +77,6 @@ public class MenuPanel extends JPanel {
         b.setBackground(new Color(70, 130, 180));
         b.setForeground(Color.WHITE);
         b.setBorder(BorderFactory.createEmptyBorder(8, 15, 8, 15));
-        b.setOpaque(true);
         return b;
     }
 
@@ -104,7 +103,7 @@ public class MenuPanel extends JPanel {
     }
 
     private void openGoals() {
-        GoalsPanel goals = new GoalsPanel();
+        GoalsPanel goals = new GoalsPanel(username);
 
         JButton backBtn = new JButton("← Back");
         backBtn.addActionListener(e -> mainApp.showPanel("MENU", "MENU"));
