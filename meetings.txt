@@ -1,0 +1,81 @@
+10/17 Project Notes (8:00a-8:30a)
+Taylor- make GitHub tutorial to push code from VSCode
+-start Login GUI and authentication
+
+Cameron and Tony- start the calendar and manage tasks
+
+Angelina- start manage goals and whether they add one day or restart their streak
+
+*Team goal: everyone be able to show some in progress code by our meeting with prof, Thursday Oct 30th at 5:45p in lab
+
+
+10/24
+4p-4:10p
+Taylor - finished Login GUI
+*need to add error handling
+
+Tony- Began Calendar UI
+
+
+11/3 WeeFit Project notes (7:00pm-7:33p)
+Finished Login
+establishing getting back on track
+
+Next meeting: 11/4 Tuesday after lab 6:54p
+Sort thru Camerons assigned tasks
+
+
+11/4 6:30p-7p
+Cameron - presented assigned tasks for everyone do to on WeeFit
+Angelina - started goals code and streak messages
+Tony- shared his calendar gui
+DATABASE:
+Object for each day - workout and food
+
+11/12
+9:30p-10p
+-Tony updated calendar to include all years and months
+-Taylor pushed login to Github
+-Cameron updated Level 3 diagram to be consistent with project
+
+
+11/13
+6:50p-7p
+Discussed database using DAO and what we want to store
+Demoed current project
+Want to have next meeting (tomorrow or weekend) to work on database and make progress on implementing goal setting menu (and connecting to rest of code)
+Looked over updated Lvl 3 diagram to see consistency with project
+
+
+11/17
+10:30a-11a
+Went over what we did over weekend Code-wise (tony calendar/ implementing json files)
+Everyone must look at userDays.json
+Go over what else needs to be done ( created google docs for priority list)
+
+11/18
+6:45p-7p
+Went over highest priority code needed for the project
+	JSON files to store goals, cals, height, sleep, workout mins
+goals.JSON needed
+Went over med priority
+
+11/20
+6:50p-7:10p
+Recaped meeting with professor
+Agreed SW isn’t intuitive enough
+Solution: Add more to Menu panel so user can follow along
+
+11/25
+3:50p-4:00p
+Disscussed Presentation, and SDS
+Want to refine any last features/ items for SW
+Want to focus on menu panel to look nicer
+Working to Update Lvl 3 Arc type to reflect project better
+Want to push meeting notes to git
+
+
+12/2
+4:00p - 5:20
+-things need to add to calendar like displaying # tasks
+- did the video for the project
